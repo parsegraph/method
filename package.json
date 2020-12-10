@@ -1,7 +1,7 @@
 {
   "name": "parsegraph-method",
   "version": "1.4.0",
-  "description": "TODO-DESCRIPTION",
+  "description": "An object that holds a function",
   "main": "dist/method.js",
   "scripts": {
     "coverage": "nyc npm run test",

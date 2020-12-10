@@ -1,4 +1,12 @@
-// TODO Implement this.
-export default function todo() {
-  return 42;
+export default function Method(func, funcThisArg) {
+  this._func = func;
+  this._funcThisArg = funcThisArg;
 }
+
+Method.prototype.call = function(...args) {
+  return this._func.apply(this._funcThisArg, args);
+};
+
+Method.prototype.apply = function(args) {
+  return this._func.apply(this._funcThisArg, args);
+};
