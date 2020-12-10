@@ -6,7 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "method.js",
     globalObject: "this",
-    library: "getTimeInMillis",
+    library: "method",
     libraryTarget: "umd",
   },
   module: {
