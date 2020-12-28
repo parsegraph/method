@@ -1,6 +1,6 @@
 {
   "name": "parsegraph-method",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "An object that holds a function",
   "main": "dist/method.js",
   "types": "dist/src/index.d.ts",
