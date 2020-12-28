@@ -5,16 +5,21 @@ SCRIPT_FILES = \
 
 all: build lint test coverage esdoc
 
-build: dist/$(DIST_NAME).js
+build: dist/$(DIST_NAME).js dist/$(DIST_NAME).d.ts
 .PHONY: build
 
-demo: dist/$(DIST_NAME).js
+demo: dist/$(DIST_NAME).js dist/$(DIST_NAME).d.ts
 	npm run demo
 .PHONY: demo
 
 check:
 	npm run test
 .PHONY: check
+
+dist/$(DIST_NAME).d.ts: dist/src/index.d.ts
+	mv $^ $@
+
+dist/src/index.d.ts: dist/$(DIST_NAME).js
 
 test: check
 .PHONY: test
