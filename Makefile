@@ -1,25 +1,24 @@
 DIST_NAME = method
 
 SCRIPT_FILES = \
-	src/index.ts
+	src/$(DIST_NAME).ts
+
+DECLARATION_FILES = \
+	dist/$(DIST_NAME).d.ts \
+	dist/$(DIST_NAME).d.ts.map
 
 all: build lint test coverage esdoc
 
-build: dist/$(DIST_NAME).js dist/$(DIST_NAME).d.ts
+build: dist/$(DIST_NAME).js $(DECLARATION_FILES)
 .PHONY: build
 
-demo: dist/$(DIST_NAME).js dist/$(DIST_NAME).d.ts
+demo: dist/$(DIST_NAME).js $(DECLARATION_FILES)
 	npm run demo
 .PHONY: demo
 
 check:
 	npm run test
 .PHONY: check
-
-dist/$(DIST_NAME).d.ts: dist/src/index.d.ts
-	mv $^ $@
-
-dist/src/index.d.ts: dist/$(DIST_NAME).js
 
 test: check
 .PHONY: test
@@ -43,8 +42,9 @@ esdoc:
 doc: esdoc
 .PHONY: doc
 
-dist/$(DIST_NAME).js: $(SCRIPT_FILES)
+dist/$(DIST_NAME).js: package.json package-lock.json $(SCRIPT_FILES)
 	npm run build
+	mv dist/src/* dist/
 
 clean:
 	rm -rf dist .nyc_output
