@@ -1,0 +1,17 @@
+{
+    "name": "parsegraph-method",
+    "version": "1.4.7",
+    "description": "method",
+    "main": "dist/parsegraph-method.js",
+    "types": "dist/parsegraph-method.d.ts",
+    "repository": {
+      "type": "git",
+      "url": "git+ssh://git@github.com/parsegraph/method.git"
+    },
+    "author": "Rainback, Inc.",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/parsegraph/method/issues"
+    },
+    "homepage": "https://github.com/parsegraph/method#readme"
+  }
