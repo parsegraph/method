@@ -1,8 +1,16 @@
-export default class Method {
-  _func: Function;
+export default class Method<Func extends Function = Function> {
+  _func: Func;
   _funcThisArg: any;
 
-  constructor(func: Function, funcThisArg?: any) {
+  constructor(func: Func, funcThisArg?: any) {
+    this.set(func, funcThisArg);
+  }
+
+  clear(): void {
+    this.set(null, null);
+  }
+
+  set(func: Func, funcThisArg?: any) {
     this._func = func;
     this._funcThisArg = funcThisArg;
   }
