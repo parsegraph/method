@@ -26,4 +26,20 @@ describe("Method", function () {
     m.set(testMethodB, b);
     assert.equal(1 - 2 - 3 - 4, m.apply([2, 3, 4]));
   });
+  it("works with canCall", () => {
+    var b = { base: 1 };
+    var m = new Method();
+    assert.isFalse(m.canCall());
+    m.call();
+    m.set(testMethodB, b);
+    assert.isTrue(m.canCall());
+    assert.equal(1 - 2 - 3 - 4, m.apply([2, 3, 4]));
+  });
+  it("works with returning function", () => {
+    var m = new Method(()=>{
+      return true
+    });
+    m.clear();
+    assert.isUndefined(m.call());
+  });
 });
