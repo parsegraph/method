@@ -2,17 +2,8 @@
   "name": "parsegraph-method",
   "version": "1.4.10-dev",
   "description": "An object that holds a function",
-  "main": "dist/parsegraph-method.js",
+  "main": "dist/parsegraph-method.lib.js",
   "types": "dist/parsegraph-method.d.ts",
-  "scripts": {
-    "coverage": "nyc npm run test",
-    "test": "cross-env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha",
-    "autotest": "cross-env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --watch",
-    "demo": "node demo/demo.js",
-    "autobuild": "webpack --watch --config webpack.config.js",
-    "build": "webpack --config webpack.config.js",
-    "build-prod": "NODE_ENV=production webpack --config webpack.prod.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/parsegraph/method.git"
@@ -23,17 +14,6 @@
     "url": "https://github.com/parsegraph/method/issues"
   },
   "homepage": "https://github.com/parsegraph/method#readme",
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-babel",
-    "reporter": [
-      "html"
-    ],
-    "exclude": [
-      "test/**.js",
-      "dist/**.js"
-    ],
-    "reportDir": "dist/coverage"
-  },
   "dependencies": {
     "@babel/cli": "^7.17.0",
     "@babel/core": "^7.17.2",

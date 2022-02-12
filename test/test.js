@@ -36,8 +36,8 @@ describe("Method", function () {
     assert.equal(1 - 2 - 3 - 4, m.apply([2, 3, 4]));
   });
   it("works with returning function", () => {
-    var m = new Method(()=>{
-      return true
+    var m = new Method(() => {
+      return true;
     });
     m.clear();
     assert.isUndefined(m.call());

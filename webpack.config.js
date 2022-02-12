@@ -1,32 +1,17 @@
-const path = require("path");
+const {DIST_NAME, webpackConfig, relDir} = require("./microproject");
 
 module.exports = {
-  entry: path.resolve(__dirname, "src/method.ts"),
+  entry: {
+    lib: relDir("src/index.ts"),
+  },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "parsegraph-method.js",
+    path: relDir("dist"),
+    filename: `parsegraph-${DIST_NAME}.[name].js`,
     globalObject: "this",
-    library: "parsegraph",
+    library: `parsegraph_${DIST_NAME}`,
     libraryTarget: "umd",
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|ts|tsx?)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader', 'ts-loader']
-      },
-      {
-        test: /\.(glsl|vs|fs|vert|frag)$/,
-        exclude: /node_modules/,
-        use: ["ts-shader-loader"],
-      },
-    ],
-  },
-  resolve: {
-    extensions: [".js", ".ts", ".tsx", ".glsl"],
-    modules: [path.resolve(__dirname, "src"), "node_modules"],
-  },
+  ...webpackConfig(),
   mode: "development",
   devtool: "eval-source-map",
 };
