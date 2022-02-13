@@ -27,10 +27,9 @@ jobs:
     - run: make install-deps
     - run: make build-prod
     - run: make tar-prod
-    - run: ./publish-prod.sh "${{ github.run_number }}" "${{ matrix.node-version }}"
+    - run: ./publish-prod.sh
       env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-    - run: git push --tags
     - uses: actions/upload-artifact@v2
       with:
         name: parsegraph-method-prod-${{ github.run_number }}
