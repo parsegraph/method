@@ -8,18 +8,19 @@ saved at construction-time.
     const method = new Method();
 
     class Object {
-    _onUpdate: Method;
+        _onUpdate: Method;
 
-    constructor() {
-        this._onUpdate = new Method();
-    }
+        constructor() {
+            this._onUpdate = new Method();
+        }
 
-    onUpdate(listener: ()=>void, listenerObj?: object) {
-        // Listener this-object is optional.
-        this._onUpdate.set(listener, listenerObj);
-    }
+        onUpdate(listener: ()=>void, listenerObj?: object) {
+            // Listener this-object is optional.
+            this._onUpdate.set(listener, listenerObj);
+        }
 
-    update() {
-        // Safe to call even if unset.
-        this._onUpdate.call();
+        update() {
+            // Safe to call even if unset.
+            this._onUpdate.call();
+        }
     }
