@@ -36,7 +36,7 @@ const root = getRootPath();
 
 async function getDemos() {
   return new Promise((respond, reject) => {
-    glob("www/*.html", {}, function (err, files) {
+    glob("../www/*.html", {}, function (err, files) {
       if (err) {
         reject(err);
       }
