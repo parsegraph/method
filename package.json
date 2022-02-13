@@ -2,8 +2,8 @@
   "name": "parsegraph-method",
   "version": "1.4.12",
   "description": "An object that holds a function",
-  "main": "dist/parsegraph-method.lib.js",
-  "types": "dist/parsegraph-method.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/parsegraph/method.git"

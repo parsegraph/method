@@ -1,5 +1,5 @@
 var { assert } = require("chai");
-import Method from "../dist/parsegraph-method";
+import Method from "..";
 
 function testMethod(a, b, c) {
   return this.base + a + b + c;
