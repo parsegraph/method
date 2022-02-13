@@ -14,7 +14,8 @@
     "url": "https://github.com/parsegraph/method/issues"
   },
   "homepage": "https://github.com/parsegraph/method#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@babel/cli": "^7.17.0",
     "@babel/core": "^7.17.2",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
@@ -32,7 +33,6 @@
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
-    "express": "^4.17.2",
     "jest": "^27.5.1",
     "jsdom": "^19.0.0",
     "jsdom-global": "^3.0.2",

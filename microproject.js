@@ -10,12 +10,20 @@ const hasShaderFiles = ()=>{
   return rv.stdout && rv.stdout.trim().length > 0;
 }
 
-const webpackConfig = ()=>{
+const webpackConfig = (prod)=>{
   const rules = [
     {
       test: /\.(js|ts|tsx?)$/,
       exclude: /node_modules/,
-      use: ["babel-loader", "ts-loader"]
+      use: ["babel-loader", {
+        loader: "ts-loader",
+        options: {
+          configFile: prod ? "tsconfig.prod.json" : "tsconfig.json",
+          compilerOptions: {
+            sourceMap: prod
+          }
+        }
+      }]
     },
   ];
   const extensions = [".js", ".ts", ".tsx"];
@@ -30,6 +38,12 @@ const webpackConfig = ()=>{
   }
 
   return {
+    output: {
+      path: relDir(prod ? "dist-prod" : "dist", "src"),
+      globalObject: "this",
+      library: `parsegraph_${DIST_NAME}`,
+      libraryTarget: "umd",
+    },
     module: {
       rules
     },

@@ -1,5 +1,5 @@
 DEST_LIB = dist/parsegraph-$(DIST_NAME).lib.js
-PROD_LIB = dist/parsegraph-$(DIST_NAME).js
+PROD_LIB = dist-prod/parsegraph-$(DIST_NAME).lib.js
 
 CLEAN_FILES = \
 	dist \
@@ -10,11 +10,11 @@ CLEAN_FILES = \
 
 CONFIG_FILES = \
 	Makefile \
-	microproject.Makefile \
+	Makefile.microproject \
 	yarn.lock \
 	package.json \
-	package-prod.json \
 	tsconfig.json \
+	tsconfig.prod.json \
 	.babelrc \
 	microproject.js \
 	webpack.prod.js \
@@ -29,11 +29,15 @@ autobuild:
 	npx webpack --watch --config webpack.config.js
 .PHONY: autobuild
 
+install-deps:
+	yarn install --immutable --immutable-cache --check-cache
+.PHONY: install-deps
+
 build-prod: $(PROD_LIB)
 .PHONY: build-prod
 
 demo: $(DEST_LIB)
-	node demo/demo.js
+	cd demo && yarn install && yarn start
 .PHONY: demo
 
 check:
@@ -89,30 +93,31 @@ clean:
 	rm -rf $(CLEAN_FILES)
 .PHONY: clean
 
-$(DEST_LIB): $(SCRIPT_FILES)
-	npx webpack --config webpack.config.js
-	mv -v dist-types/src/* dist/
-	mv dist/index.d.ts dist/parsegraph-$(DIST_NAME).d.ts
-	mv dist/index.d.ts.map dist/parsegraph-$(DIST_NAME).d.ts.map
+EXTRA_FILES = \
+	LICENSE \
+	package.json \
+	yarn.lock
 
-$(PROD_LIB): package.json yarn.lock $(SCRIPT_FILES)
-	NODE_ENV=production TS_NODE_PROJECT=tsconfig.prod.json npx webpack --config webpack.prod.js
-	mv -v dist-types/src/* dist-prod/
-	mv dist-prod/index.d.ts dist-prod/parsegraph-$(DIST_NAME).d.ts
-	mv dist-prod/index.d.ts.map dist-prod/parsegraph-$(DIST_NAME).d.ts.map
+$(DEST_LIB): $(EXTRA_FILES) $(SCRIPT_FILES)
+	npx webpack --config webpack.config.js
+
+$(PROD_LIB): $(EXTRA_FILES) $(SCRIPT_FILES)
+	NODE_ENV=production npx webpack --config webpack.prod.js
+
+BUILD=parsegraph-$(DIST_NAME)
 
 parsegraph-$(DIST_NAME)-dev.tgz: $(DEST_LIB)
-	rm -rf parsegraph-$(DIST_NAME)
-	mkdir parsegraph-$(DIST_NAME)
-	cp -r -t parsegraph-$(DIST_NAME) package.json yarn.lock README.md demo/ LICENSE dist/
-	tar cvzf $@ parsegraph-$(DIST_NAME)/
-	rm -rf parsegraph-$(DIST_NAME)
+	mkdir $(BUILD)
+	cp -r -t $(BUILD) $(EXTRA_FILES) dist/
+	rm -rf $(BUILD)/dist/coverage
+	rm -rf $(BUILD)/dist/docs
+	sed -E -i 's/("version"\s*:\s*")([0-9.]+)("\s*,\s*)$$/\1\2-dev\3/g' $(BUILD)/package.json
+	tar cvzf $@ $(BUILD)/
+	rm -rf $(BUILD)
 
 parsegraph-$(DIST_NAME)-prod.tgz: $(PROD_LIB)
-	rm -rf parsegraph-$(DIST_NAME)
-	mkdir parsegraph-$(DIST_NAME)
-	cp -r README.md LICENSE parsegraph-$(DIST_NAME)
-	cp -r dist-prod/ parsegraph-$(DIST_NAME)/dist
-	cp -r package-prod.json parsegraph-$(DIST_NAME)/package.json
-	tar cvzf $@ parsegraph-$(DIST_NAME)/
-	rm -rf parsegraph-$(DIST_NAME)
+	mkdir $(BUILD)
+	cp -r -t $(BUILD) $(EXTRA_FILES)
+	cp -r dist-prod/ $(BUILD)/dist
+	tar cvzf $@ $(BUILD)/
+	rm -rf $(BUILD)
