@@ -2,14 +2,7 @@ const {DIST_NAME, webpackConfig, relDir} = require("./microproject");
 
 module.exports = {
   entry: {
-    lib: relDir("src/index.ts"),
-  },
-  output: {
-    path: relDir("dist"),
-    filename: `parsegraph-${DIST_NAME}.[name].js`,
-    globalObject: "this",
-    library: `parsegraph_${DIST_NAME}`,
-    libraryTarget: "umd",
+    index: relDir("src/index.ts"),
   },
   ...webpackConfig(),
   mode: "development",
