@@ -1,11 +1,15 @@
-import todo from ".";
+import Method from ".";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("demo");
   root.style.position = "relative";
 
   const container = document.createElement("div");
-  container.innerHTML = `${todo()}`;
+  let i = 0;
+  const cb = new Method(() => {
+    container.innerHTML = `Called ${++i} time${i === 1 ? "" : "s"}!`;
+  });
+
   container.style.position = "absolute";
   container.style.left = "0px";
   container.style.top = "0px";
@@ -19,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.style.color = `rgb(${rand()}, ${rand()}, ${rand()})`;
     container.style.left = `${Math.random() * root.clientWidth}px`;
     container.style.top = `${Math.random() * root.clientHeight}px`;
+    cb.call();
   };
 
   const dot = document.createElement("div");
